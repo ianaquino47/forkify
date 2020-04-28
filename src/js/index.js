@@ -1,6 +1,7 @@
 // Global app controller
 import Search from './models/Search'
 import Recipe from './models/Recipe'
+import List from './models/List'
 import * as searchView from './views/searchView'
 import * as recipeView from './views/recipeView'
 import { elements, renderLoader, clearLoader } from './views/base'
@@ -59,7 +60,6 @@ elements.searchResultPages.addEventListener('click', e => {
 //Recipe Controller
 const controlRecipe = async () => {
     const id = window.location.hash.replace('#', '');
-    console.log(id)
 
     if (id) {
         //prepare UI for changes
@@ -82,6 +82,7 @@ const controlRecipe = async () => {
             //render recipe
             clearLoader();
             recipeView.renderRecipe(state.recipe);
+            console.log(state.recipe)
         } catch (error) {
             console.log(error)
             alert('Error processing recipe!')
@@ -107,3 +108,5 @@ elements.recipe.addEventListener('click', e => {
     }
     console.log(state.recipe)
 });
+
+window.l = new List()
