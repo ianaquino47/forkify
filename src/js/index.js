@@ -13,7 +13,7 @@ import { elements, renderLoader, clearLoader } from './views/base'
     // - shopping list Object
     // - liked recipes
 const state = {}
-
+window.state = state;
 
 //SearchController
 const controlSearch = async () => {
@@ -105,6 +105,24 @@ const controlList = () => {
         listView.renderItem(item);
     });
 }
+
+//Handle delete and update list item events
+elements.shopping.addEventListener('click', e => {
+    const id = e.target.closest('.shopping__item').dataset.itemid
+
+    //Handle the delete button
+    if (e.target.matches('.shopping__delete, .shopping__delete *')) {
+        //delete from state
+        state.list.deleteItem(id);
+
+        //delete from UI
+        listView.deleteItem(id);
+    } else if (e.target.matches('.shopping__count-value')) {
+        const val = parseFloat(e.target.value, 10);
+        state.list.updateCount(id, val);
+    }
+})
+
 //Handling Recipe button clicks
 elements.recipe.addEventListener('click', e => {
     if (e.target.matches('.btn-decrease, .btn-decrease *')) {
@@ -120,7 +138,6 @@ elements.recipe.addEventListener('click', e => {
     } else if (e.target.matches('.recipe__btn--add, .recipe__btn--add *')) {
         controlList();
     }
-    console.log(state.recipe)
 });
 
 window.l = new List()
